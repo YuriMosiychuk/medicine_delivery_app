@@ -1,0 +1,8 @@
+
+.icon-trash:before { content: '\e02a'; } /* '' */
+.icon-down-open:before { content: '\e0d3'; } /* '' */
+.icon-shop:before { content: '\e800'; } /* '' */
+.icon-bag:before { content: '\e801'; } /* '' */
+.icon-barcode:before { content: '\e802'; } /* '' */
+.icon-basket:before { content: '\e803'; } /* '' */
+.icon-history:before { content: '\f1da'; } /* '' */

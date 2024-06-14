@@ -1,0 +1,25 @@
+<%- include('header.ejs') %>
+
+  <div class="container">
+    <form class="row justify-content-center search-form" novalidate>
+      <div class="col col-lg-4">
+        <div class="input-group mb-3">
+          <span for="email" class="input-group-text" >Email</span>
+          <input id="email" type="text" class="form-control" required>
+        </div>
+      </div>
+      <div class="col col-lg-4">
+        <div class="input-group mb-3">
+          <span for="phone" class="input-group-text">Phone</span>
+          <input id="phone" type="text" class="form-control" required>
+        </div>
+      </div>
+      <div class="col col-lg-2">
+        <button  type="button" data-url="/history-search" class="btn btn-secondary search-btn">Search</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="history-table" class="container">Place for table</div>
+
+<%- include('footer.ejs') %>    

@@ -1,0 +1,19 @@
+<%- include('header.ejs') %>
+<div class="container text-center">
+  <div class="row align-items-center">
+    <% couponsArr.forEach(obj => { %>
+      <div class="col">
+        <div class="card" style="width: 26rem">
+          <img src="<%= obj.imgUrl %>" class="card-img-top" alt="Coupon Image" />
+          <div class="card-body">
+            <p class="card-text"><%= obj.title %></p>
+            <button class="btn btn-primary copy-btn" type="button" data-url="<%= obj.couponCode %>">Copy</button>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<%- include('footer.ejs') %>
+

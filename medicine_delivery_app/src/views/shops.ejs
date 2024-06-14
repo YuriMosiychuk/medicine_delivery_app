@@ -1,0 +1,40 @@
+<%- include('header.ejs') %>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div class="container">
+                    <% shopsArr.forEach(obj => { %>
+                        <a href="/shops/<%= obj.id %>" 
+                            class="row shop-item <%= obj.id == currentShopId ? 'shop-item-selected' : '' %>">
+                            <i class="icon-down-open"> <%= obj.shopName %></i>
+                        </a>
+                    <% }); %>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <div class="row row-cols-2">
+                        <% productsArr.forEach(obj => { %>
+                            <div class="col" title="<%= obj.description %>">
+                                <div class="container product-item">
+                                    <img class="product-image" src="<%= obj.imgUrl %>" />
+                                    <span class="product-item-title"><%= obj.title %></span>
+                                    <button data-url="/add-to-cart/<%= obj.id %>" 
+                                            data-id="<%= obj.id %>"  
+                                            type="button" 
+                                            class="btn btn-secondary product-item-btn">
+                                        <i class="icon-basket"></i>
+                                    </button>   
+                                </div>
+                            </div>
+                        <% }); %>
+                      </div>
+                </div>
+            </div>
+        </div>  
+    </div>  
+
+
+
+<%- include('footer.ejs') %>    

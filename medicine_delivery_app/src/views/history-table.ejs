@@ -1,0 +1,42 @@
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col"> #</th>
+        <th scope="col"> Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Products count</th>
+        <th scope="col">Total count</th>
+        <th scope="col">Total price</th>
+        <th scope="col">Discounted Price</th>
+        <th scope="col">Final Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% orderItems.forEach(obj => { %>
+        <tr>
+            <th scope="row"  class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      #<%=obj.orderId %>
+                    </button>
+                  </h2>
+                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                         <div class="accordion-body">
+                        
+                         </div>
+                     </div>
+                </div>
+            </th>
+            <td><%= obj.userName %></td>
+            <td><%= obj.userAddress %></td>
+            <td><%= obj.uniqueProductsCount %></td>
+            <td><%= obj.totalProductsCount %></td>
+            <td><%= obj.totalPrice %></td>
+            <td><%= obj.discountedPrice %></td>
+            <td><%= obj.finalPrice %></td>
+        </tr>
+    <% }); %>  
+    </tbody>
+</table>

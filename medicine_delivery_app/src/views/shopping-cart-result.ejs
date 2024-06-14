@@ -1,0 +1,12 @@
+<%- include('header.ejs') %>
+<div class="block">
+  <div
+    id="order-result"
+    data-result="<%= isSuccess %>"
+    class="order-result <%= isSuccess == true ? 'order-success' : 'order-failed' %>"
+  >
+    <%= message %>
+  </div>
+
+  <%- include('footer.ejs') %>
+</div>

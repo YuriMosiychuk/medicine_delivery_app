@@ -1,0 +1,217 @@
+<%- include('header.ejs') %>
+
+<form id="buy-form" class="container text-form" action="/buy" method="post">
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <div id="map-container">
+          <!-- </div> -->
+          <!-- </div> -->
+          <div class="mb-3">
+            <div id="map"></div>
+            <% shops.forEach(obj => { %>
+            <input
+              id="shop-<%= obj.id %>"
+              class="shop-item"
+              type="hidden"
+              data-id="<%= obj.id %>"
+              data-name="<%= obj.name %>"
+              data-latitude="<%= obj.latitude %>"
+              data-longitude="<%= obj.longitude %>"
+            />
+            <% }); %>
+            <!-- <% cartProducts.forEach(obj => { %>
+      </div>
+      <div class="mb-3">
+        <div
+          id="product-<%= obj.id %>"
+          class="row g-0 bg-body-secondary position-relative" >
+          <div class="col-md-6 p-4 ps-md-0">
+            <h5 class="mt-0">Shops <%= obj.shopId %></h5>
+          </div>
+          <div class="col-md-6 p-4 ps-md-0">
+            <p class="mt-0">Coordinates latitude and longitude</p>
+            <p class="mt-0"><%= obj.shopLatitude %>,<%= obj.shopLongitude%></p>
+          </div>
+        </div>
+        <% }); %> -->
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email" name="email" />
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="phone" name="phone" />
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input type="text" class="form-control" id="address" name="address" />
+      </div>
+      <div class="mb-3">
+        <select
+          id="selectid"
+          class="form-select"
+          class="ice-cream"
+          name="ice-cream"
+          onchange="calculateAndDisplayRoute()"
+        >
+          <option value=""></option>
+        </select>
+      </div>
+    </div>
+
+    <input type="hidden" id="couponId" name="couponId" />
+    <input type="hidden" id="couponDiscount" name="couponDiscount" />
+
+    <div class="col">
+      <% cartProducts.forEach((obj, index) => { %>
+      <input
+        type="hidden"
+        name="products[<%= index %>][id]"
+        value="<%= obj.id %>"
+      />
+      <input
+        id="product-<%= obj.id %>-quantity"
+        type="hidden"
+        name="products[<%= index %>][quantity]"
+        value="<%= obj.quantity %>"
+      />
+      <div
+        id="product-<%= obj.id %>"
+        class="row g-0 bg-body-secondary position-relative"
+      >
+        <div class="col-md-6 mb-md-0 p-md-4">
+          <img src="<%= obj.imgUrl %>" class="product-img" alt="1" />
+        </div>
+        <div class="col-md-6 p-4 ps-md-0">
+          <h4 class="mt-0"><%= obj.title %></h4>
+          <p>Price: <%= obj.price %></p>
+          <div class="col-auto">
+            <input
+              id="<%= obj.id %>"
+              class="product-quantity"
+              data-price="<%= obj.price %>"
+              type="number"
+              max="10"
+              min="1"
+              value="<%= obj.quantity %>"
+            />
+          </div>
+
+          <div class="col-md-6 p-4 ps-md-0">
+            <button
+              data-url="/remove-from-cart/<%=obj.id %>"
+              data-id="<%=obj.id %>"
+              type="button"
+              class="btn btn-outline-dark remove-product"
+            >
+              <i class="icon-trash"></i>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+      <div class="container text-center">
+        <div class="row align-items-end">
+          <div class="col">
+            <button
+              id="coupons-modal-btn"
+              type="button"
+              class="btn btn-primary btn-sm"
+            >
+              coupons codee
+              <i class="icon-barcode"></i>
+            </button>
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-primary btn-sm">
+              captcha
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="container text-center">
+        <div class="row align-items-end">
+          <div class="col">
+            Total price: <span id="totalPrice"> <%= totalPrice %> </span>
+            <span id="coupon-details"></span>
+          </div>
+          <div class="col-2">
+            <button type="submit" class="btn btn-primary">Buy</button>
+          </div>
+          <div id="alert-danger" class="alert alert-danger" role="alert">
+             Необхідно підтвердити, що Ви не робот!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div
+  class="g-recaptcha my-recapcha"
+  data-sitekey="6Ldn8fEpAAAAAIpJHf6uxFq2qwLmn-vKUBOqgkIf"
+  data-callback="onRecaptchaSuccess"
+  data-expired-callback="onRecaptchaResponseExpiry"
+  data-error-callback="onRecaptchaError">
+</div>
+
+
+
+<div
+  class="modal fade"
+  id="couponModal"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Please enter your coupon code
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row modal-padding">
+          <label for="couponCode" class="form-label">Coupon code</label>
+          <input
+            type="text"
+            class="form-control"
+            id="couponCode"
+            name="couponCode"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          id="coupon-btn"
+          type="button"
+          class="btn btn-primary"
+          data-url="/coupons/validate"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('footer.ejs') %>
