@@ -3,24 +3,18 @@ const app = express();
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
-
-
 const userRoutesPath = path.join(__dirname, "src/routes/shops.js");
 const userRoutes = require(userRoutesPath);
-app.use("/", userRoutes);
-
 const usershoppingcart = path.join(__dirname, "src/routes/shopping-cart.js");
 const usercart = require(usershoppingcart);
-app.use("/", usercart);
-
-
 const userhistory = path.join(__dirname, "src/routes/history.js");
 const userhist = require(userhistory);
-app.use("/", userhist);
-
-
 const usercoupons= path.join(__dirname, "src/routes/coupons.js");
 const usercoupon = require(usercoupons);
+
+app.use("/", userRoutes);
+app.use("/", usercart);
+app.use("/", userhist);
 app.use("/", usercoupon);
 
 const options = {
@@ -36,8 +30,6 @@ app.set("views", viewsDirectoryPath);
  
 app.use(express.static(viewsDirectoryPath));
 app.use(express.static(path.resolve("./public")));
-
-
 
 app.use((req, res, next) => {
   if (req.hostname === "localhost") {
