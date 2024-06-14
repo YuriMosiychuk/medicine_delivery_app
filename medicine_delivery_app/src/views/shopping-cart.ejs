@@ -1,12 +1,9 @@
 <%- include('header.ejs') %>
-
 <form id="buy-form" class="container text-form" action="/buy" method="post">
   <div class="row">
     <div class="col">
       <div class="mb-3">
         <div id="map-container">
-          <!-- </div> -->
-          <!-- </div> -->
           <div class="mb-3">
             <div id="map"></div>
             <% shops.forEach(obj => { %>
@@ -20,21 +17,6 @@
               data-longitude="<%= obj.longitude %>"
             />
             <% }); %>
-            <!-- <% cartProducts.forEach(obj => { %>
-      </div>
-      <div class="mb-3">
-        <div
-          id="product-<%= obj.id %>"
-          class="row g-0 bg-body-secondary position-relative" >
-          <div class="col-md-6 p-4 ps-md-0">
-            <h5 class="mt-0">Shops <%= obj.shopId %></h5>
-          </div>
-          <div class="col-md-6 p-4 ps-md-0">
-            <p class="mt-0">Coordinates latitude and longitude</p>
-            <p class="mt-0"><%= obj.shopLatitude %>,<%= obj.shopLongitude%></p>
-          </div>
-        </div>
-        <% }); %> -->
           </div>
         </div>
       </div>
@@ -164,8 +146,6 @@
   data-error-callback="onRecaptchaError">
 </div>
 
-
-
 <div
   class="modal fade"
   id="couponModal"
@@ -213,5 +193,4 @@
     </div>
   </div>
 </div>
-
 <%- include('footer.ejs') %>

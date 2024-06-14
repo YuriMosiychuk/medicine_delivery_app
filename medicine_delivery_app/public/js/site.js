@@ -22,6 +22,7 @@ let modalInstance = null;
 let isRecaptchaValidated = false;
 const saveCouponBtn = document.getElementById("coupon-btn");
 const openCouponModualBtn = document.getElementById("coupons-modal-btn");
+const localStorageProducts = "addToCartStatus";
 
 if (saveCouponBtn != null) {
   saveCouponBtn.addEventListener("click", checkCoupon);
@@ -30,11 +31,6 @@ if (saveCouponBtn != null) {
 if (openCouponModualBtn != null) {
   openCouponModualBtn.addEventListener("click", checkCouponModel);
 }
-
-// document.addEventListener("DOMContentLoaded", ckeckCartProducts, false);
-// document.addEventListener("DOMContentLoaded", initMap, false);
-
-const localStorageProducts = "addToCartStatus";
 
 function recalculateTotal(e) {
   var inputs = document.getElementsByClassName("product-quantity");
@@ -111,7 +107,6 @@ async function addToCart(event) {
 
       addProductToLocalStorage(element);
     } catch (error) {
-      // console.error('Error:', error);
     }
   }
 }
@@ -226,7 +221,6 @@ async function searchOrderedProducts(event) {
       const tableContainer = document.getElementById("history-table");
       tableContainer.innerHTML = htmlTable;
     } catch (error) {
-      // console.error('Error:', error);
     }
   }
 }
@@ -281,7 +275,6 @@ async function checkCoupon(event) {
   recalculateTotal();
 }
 
-// Копіювання кода купона на сторінці coupons.ejs для модального вікна
 document.addEventListener("DOMContentLoaded", function () {
   const copyBtns = document.querySelectorAll(".copy-btn");
 
@@ -304,14 +297,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
 document.addEventListener("DOMContentLoaded", checkRecupcha());
 
 let map;
 let marker;
 let directionsService;
 let directionsRenderer;
-let routePolyline; // Оголошуємо змінну для зберігання лінії маршруту
+let routePolyline; 
 
 async function initMap() {
   const { Map } = await google.maps.importLibrary("maps");
@@ -347,12 +339,11 @@ async function initMap() {
     directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
 
-    // Додаємо обробник кліків на карту
     map.addListener("click", function (event) {
       placeMarkerAndPanTo(event.latLng, map);
     });
   } else {
-    // Якщо немає магазинів у кошику, відображаємо вбудовану карту Google Maps
+    
     var mapContainer = document.getElementById("map-container");
     mapContainer.innerHTML = `
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d169794.07259955906!2d25.769109731397695!3d48.32145859124088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473407dadce32d8b%3A0x16962b85f17a97e2!2z0KfQtdGA0L3RltCy0YbRliwg0KfQtdGA0L3RltCy0LXRhtGM0LrQsCDQvtCx0LvQsNGB0YLRjCwgNTgwMDA!5e0!3m2!1suk!2sua" 
@@ -363,27 +354,25 @@ async function initMap() {
 
 function placeMarkerAndPanTo(latLng, map) {
   if (marker) {
-    marker.setPosition(latLng); // Перемістити маркер на нові координати
+    marker.setPosition(latLng); 
   } else {
     marker = new google.maps.Marker({
       position: latLng,
       map: map,
       title: "My coordinates",
       icon: {
-        url: "/images/vector-icon.jpg", // посилання на ваше зображення будинку
-        scaledSize: new google.maps.Size(40, 40), // розмір зображення
+        url: "/images/vector-icon.jpg", 
+        scaledSize: new google.maps.Size(40, 40), 
       },
     });
   }
 
   map.panTo(latLng);
 
-  // Відображення координат у полі вводу
   const addressInput = document.getElementById("address");
   const coordinates = latLng.lat() + ", " + latLng.lng();
   addressInput.value = coordinates;
 
-  // Додавання нової опції у випадаючий список
   const selectElement = document.getElementById("selectid");
   const option = document.createElement("option");
   option.value = coordinates;
@@ -400,15 +389,12 @@ function calculateAndDisplayRoute() {
 
   const destination = selectedLatLng;
 
-  // Видаляємо попередні маршрути, якщо вони існують
   if (routePolyline) {
     routePolyline.setMap(null);
   }
 
-  // Створюємо масив для зберігання координат магазинів
   const shopCoordinates = [];
 
-  // Отримуємо координати кожного магазину і додаємо їх до масиву
   document.querySelectorAll(".shop-item").forEach((shop) => {
     const shopLat = parseFloat(shop.getAttribute("data-latitude"));
     const shopLng = parseFloat(shop.getAttribute("data-longitude"));
@@ -416,7 +402,6 @@ function calculateAndDisplayRoute() {
     shopCoordinates.push(shopLatLng);
   });
 
-  // Додаємо прямі лінії від останнього магазину до обраної точки
   shopCoordinates.forEach((coordinate) => {
     const routeCoordinates = [coordinate, destination];
     const routePolyline = new google.maps.Polyline({
@@ -430,9 +415,6 @@ function calculateAndDisplayRoute() {
   });
 }
 
-
-// let isRecaptchaValidated = false;
-
 function onRecaptchaSuccess() {
   isRecaptchaValidated = true;
   document.getElementById('alert-danger').style.visibility = 'hidden';
@@ -440,13 +422,11 @@ function onRecaptchaSuccess() {
 
 function onRecaptchaError() {  
   document.getElementById('alert-danger').style.visibility = 'visible';
-  // console.log('onRecaptchaError');
 }
 
 function onRecaptchaResponseExpiry() {
   onRecaptchaError();
 }
-
 
 function checkRecupcha() {
   const buyForm = document.getElementById('buy-form');
@@ -458,14 +438,12 @@ function checkRecupcha() {
   buyForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // failure
     if (!isRecaptchaValidated) {
       onRecaptchaError();
 
       return;
     }
 
-    // success
     console.log('recapcha success');
     buyForm.submit();
   });  
