@@ -33,7 +33,7 @@ app.use(express.static(path.resolve("./public")));
 
 app.use((req, res, next) => {
   if (req.hostname === "localhost") {
-    res.setHeader("Strict-Transport-Security", "max-age=3600"); // 1 hour
+    res.setHeader("Strict-Transport-Security", "max-age=3600");
   }
   next();
 });
