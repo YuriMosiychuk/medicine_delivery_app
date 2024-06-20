@@ -34,18 +34,13 @@
       </div>
       <div class="mb-3">
         <label for="address" class="form-label">Address</label>
-        <input type="text" class="form-control" id="address" name="address" />
-      </div>
-      <div class="mb-3">
-        <select
-          id="selectid"
-          class="form-select"
-          class="ice-cream"
-          name="ice-cream"
+        <input
+          type="text"
+          class="form-control"
+          id="address"
+          name="address"
           onchange="calculateAndDisplayRoute()"
-        >
-          <option value=""></option>
-        </select>
+        />
       </div>
     </div>
 
@@ -102,8 +97,12 @@
       </div>
       <% }); %>
       <div class="container text-center">
-        <div class="row align-items-end">
+        <div class="row align-items-start">
           <div class="col">
+            Total price: <span id="totalPrice"> <%= totalPrice %> </span>
+            <span id="coupon-details"></span>
+          </div>
+          <div class="col-4">
             <button
               id="coupons-modal-btn"
               type="button"
@@ -113,38 +112,30 @@
               <i class="icon-barcode"></i>
             </button>
           </div>
-          <div class="col-2">
-            <button type="button" class="btn btn-primary btn-sm">
-              captcha
-            </button>
-          </div>
         </div>
       </div>
       <div class="container text-center">
-        <div class="row align-items-end">
+        <div class="row align-items-start">
           <div class="col">
-            Total price: <span id="totalPrice"> <%= totalPrice %> </span>
-            <span id="coupon-details"></span>
+            <div
+              class="g-recaptcha my-recapcha"
+              data-sitekey="6Ldn8fEpAAAAAIpJHf6uxFq2qwLmn-vKUBOqgkIf"
+              data-callback="onRecaptchaSuccess"
+              data-expired-callback="onRecaptchaResponseExpiry"
+              data-error-callback="onRecaptchaError"
+            ></div>
           </div>
           <div class="col-2">
             <button type="submit" class="btn btn-primary">Buy</button>
           </div>
           <div id="alert-danger" class="alert alert-danger" role="alert">
-             Необхідно підтвердити, що Ви не робот!
+            Необхідно підтвердити, що Ви не робот!
           </div>
         </div>
       </div>
     </div>
   </div>
 </form>
-
-<div
-  class="g-recaptcha my-recapcha"
-  data-sitekey="6Ldn8fEpAAAAAIpJHf6uxFq2qwLmn-vKUBOqgkIf"
-  data-callback="onRecaptchaSuccess"
-  data-expired-callback="onRecaptchaResponseExpiry"
-  data-error-callback="onRecaptchaError">
-</div>
 
 <div
   class="modal fade"

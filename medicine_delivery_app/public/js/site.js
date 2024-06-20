@@ -373,15 +373,12 @@ function placeMarkerAndPanTo(latLng, map) {
   const coordinates = latLng.lat() + ", " + latLng.lng();
   addressInput.value = coordinates;
 
-  const selectElement = document.getElementById("selectid");
-  const option = document.createElement("option");
-  option.value = coordinates;
-  option.text = "Coordinates: " + coordinates;
-  selectElement.appendChild(option);
+  calculateAndDisplayRoute();
+
 }
 
 function calculateAndDisplayRoute() {
-  const selectedOption = document.getElementById("selectid").value;
+  const selectedOption = document.getElementById("address").value;
   const selectedCoords = selectedOption.split(", ");
   const selectedLat = parseFloat(selectedCoords[0]);
   const selectedLng = parseFloat(selectedCoords[1]);
