@@ -26,7 +26,6 @@ CREATE TABLE order_products (
 	quantity int not null
 );
 
-
 insert into shops (name) values ('Доброго Дня');
 insert into shops (name) values ('Здорова Родина');
 insert into shops (name) values ('Бажаємо здоровя');
@@ -36,7 +35,6 @@ insert into shops (name) values ('Аптека оптових цін');
 insert into shops (name) values ('Сімейна аптека');
 insert into shops (name) values ('ІВА-ФАРМ');
  
-
 insert into products (shop_id, title, description, img_url, price) 
 values 
 (
@@ -291,7 +289,6 @@ values
 	 189
 );
 
-
   insert into products (shop_id, title, description, img_url, price) values
  (
      7, 
@@ -375,9 +372,6 @@ values
      138
 );
 
-
-
-
 select 
 	s."name", sum(op.quantity)
 from orders o 
@@ -385,7 +379,6 @@ inner join order_products op on op.order_id = o.id
 inner join products p ON p.id = op.product_id 
 inner join shops s on s.id = p.shop_id 
 group by s."name" 
-
 
 select 
 	o.id, o."name" , o.phone, o.email, o.adress , count(op.order_id), sum(op.quantity)
@@ -396,8 +389,6 @@ group by o.id, o."name" , o.phone, o.email, o.adress
 
 select * from order_products op where order_id = 4
 
-
-
 UPDATE orders AS o
     SET price = (
     SELECT SUM(p.price * op.quantity) 
@@ -406,9 +397,6 @@ UPDATE orders AS o
     WHERE op.order_id = o.id
     )
   
-
-
-
    UPDATE order_products AS op
     SET price = (
     SELECT SUM(p.price * op.quantity)
@@ -423,9 +411,6 @@ select o.id, o."name", o.adress, count(op.order_id) as products_count, sum(op.qu
   where o.phone = $1 and o.email = $2
   group by o.id, o."name" , o.phone, o.email, o.adress
 
-
-
-  ----------- coupons 
 create table coupons (
 	id serial PRIMARY KEY,
 	title varchar(100) not null,
@@ -441,10 +426,6 @@ values ('Купуй українське', null, '/images/coupons/buy_ukr.webp',
 insert into coupons (title, desciption, img_url, coupon_code, discount)
 values ('Кешбек за кожен чек', null, '/images/coupons/cashback.webp', 'asdas3asd@asdasd', 20);
 
-
--------------талички для order_products, orders
-
-
 CREATE TABLE order_products (
 	order_id int references orders(id) on delete cascade on update cascade,
 	product_id int references products(id) on delete cascade on update cascade,
@@ -452,7 +433,6 @@ CREATE TABLE order_products (
      price  float
 );
  
-
 CREATE TABLE orders (
     id serial PRIMARY KEY,
     name varchar(50) NOT NULL,
@@ -463,15 +443,10 @@ CREATE TABLE orders (
     price  float
 );
  
-
-
---  добавлення координати в shops
   ALTER TABLE shops ADD COLUMN latitude FLOAT;
-  
   ALTER TABLE shops ADD COLUMN longitude float;
 
 select * from shops s
-
 
 UPDATE shops
 SET latitude = 48.313748,
@@ -492,7 +467,6 @@ UPDATE shops
 SET latitude =48.299698,
     longitude =25.991164
 WHERE id = 4;
-
 
 UPDATE shops
 SET latitude =48.269861,
