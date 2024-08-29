@@ -2,5 +2,6 @@ node_modules/
 public/.DS_Store
 public/images/.DS_Store
 src/.DS_Store   
+src/.footer.ejs  
 .DS_Store
 package-lock.json
